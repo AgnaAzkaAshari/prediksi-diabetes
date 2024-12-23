@@ -1,21 +1,37 @@
 import streamlit as st
 import pickle
 
-# Buka file dalam mode 'rb' (read binary)
-with open('diabetes_model.sav', 'rb') as file:
+with open('diabetes_svm.sav', 'rb') as file:
     diabetes_model = pickle.load(file)
 
 st.title("Prediksi Diabetes")
 
+col1, col2 = st.columns(2)
 
-pregnancies = st.text_input('Input nilai Pregnancies (Kehamilan)')
-glucose = st.text_input('Input nilai Glukosa (Kadar Gula Darah)')
-bloodPressure = st.text_input('Input nilai Tekanan Darah')
-skinThickness = st.text_input('Input nilai Ketebalan Kulit (Skin Thiickness)')
-insulin = st.text_input('Input nilai Insulin')
-bmi = st.text_input('Input nilai Body Mass Index (BMI)')
-diabetesPedigreeFunction = st.text_input('Input nilai Diabetes Pedigree Function')
-age = st.text_input('Input Umur')
+with col1:
+    pregnancies = st.text_input('Input nilai Pregnancies (Kehamilan)')
+
+with col1:
+    glucose = st.text_input('Input nilai Glukosa (Kadar Gula Darah)')
+
+with col2:
+    bloodPressure = st.text_input('Input nilai Tekanan Darah')
+
+with col2:
+    skinThickness = st.text_input('Input nilai Ketebalan Kulit (Skin Thiickness)')
+
+with col1:
+    insulin = st.text_input('Input nilai Insulin')
+
+with col1:
+    bmi = st.text_input('Input nilai Body Mass Index (BMI)')
+
+with col2:
+    diabetesPedigreeFunction = st.text_input('Input nilai Diabetes Pedigree Function')
+
+with col2:
+    age = st.text_input('Input Umur')
+
 
 diabetes_diagnosis = ''
 
@@ -23,7 +39,7 @@ diabetes_diagnosis = ''
 if st.button('Prediksi'):
     diabetes_prediction = diabetes_model.predict([[pregnancies, glucose, bloodPressure, skinThickness, insulin, bmi, diabetesPedigreeFunction, age]])
 
-    if(diabetes_prediction[0] == 0):
+    if(diabetes_prediction[0] == 1):
         diabetes_diagnosis = 'Prediksi : Terkena Diabetes'
     else:
         diabetes_diagnosis = 'Prediksi : Tidak Terkena Diabetes'
